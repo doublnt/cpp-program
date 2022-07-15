@@ -1,4 +1,0 @@
-D:/work/cpp-program/cmake-build-debug/CMakeFiles/cpp_program.dir
-D:/work/cpp-program/cmake-build-debug/CMakeFiles/cpp_program_exec.dir
-D:/work/cpp-program/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/work/cpp-program/cmake-build-debug/CMakeFiles/rebuild_cache.dir

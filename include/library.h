@@ -26,13 +26,48 @@ public:
     ~t2();
 };
 
-class UseT2{
+class UseT2 {
 private:
     std::unique_ptr<t2> local_t2;
 
 public:
     UseT2();
+
     ~UseT2();
 };
+
+class DataTes {
+private:
+    int data;
+
+public:
+    explicit DataTes(int data_tes) {
+        data = data_tes;
+    }
+
+    DataTes() {
+        data = 200;
+        std::cout << "ii" << std::endl;
+    }
+
+    DataTes(const DataTes &tes) {
+        data = tes.data;
+    }
+
+    // 形参 会调用 拷贝构造函数
+    void func_tt(DataTes tt) {
+
+    }
+
+    // 返回值时也会调用 拷贝 构造函数
+    DataTes func_tt2() {
+        DataTes ss;
+
+        return ss;
+    }
+
+
+};
+
 
 #endif //CPP_PROGRAM_LIBRARY_H

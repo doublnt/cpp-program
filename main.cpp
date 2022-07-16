@@ -136,6 +136,14 @@ public:
         return data;
     }
 
+    const TempCon *operator&() const {
+        return this;
+    }
+
+    TempCon *operator&() {
+        return this;
+    }
+
 private:
     int data;
 };
@@ -146,10 +154,58 @@ TempCon tes_func(const TempCon &tt) {
     return TempCon(val); // 编译器 优化了， TempCon temp(val)  return temp;
 }
 
-int main() {
-    TempCon tt(200);
+class CopyTemp {
+private:
+    char *str;
+public:
+    explicit CopyTemp(const char *s) {
+        if (s != nullptr) {
+            str = (char *) malloc(sizeof(char));
+            str[0] = '\0';
+        } else {
+            str = (char *) malloc(sizeof(char) * strlen(s) + 1);
+            strcpy(str, s);
+        }
+    }
 
-    TempCon tt2 = tes_func(tt);
+    // 拷贝构造函数， 左值未定义的
+    explicit CopyTemp(const CopyTemp &temp) {
+        str = (char *) malloc(sizeof(char) * strlen(temp.str) + 1);
+        strcpy(str, temp.str);
+    }
+
+    // 赋值 函数，左值一般都是已经 定义好的。
+    CopyTemp &operator=(const CopyTemp &temp) {
+        if (this != &temp) {
+            free(str);
+            str = nullptr;
+
+            str = (char *) malloc(sizeof(char) * strlen(temp.str) + 1);
+            strcpy(str, temp.str);
+        }
+
+        return *this;
+    }
+
+    ~CopyTemp() {
+        free(str);
+        str = nullptr;
+    }
+};
+
+int main() {
+    char *dd = "Hello, world.";
+    CopyTemp copyTemp(dd);
+    CopyTemp copyTemp1(copyTemp);
+
+    CopyTemp copyTemp2("SS");
+    copyTemp2 = copyTemp1;
+
+//    TempCon tt(200);
+//
+//    TempCon tt2 = tes_func(tt);
+//
+//    TempCon *tt_ptr = &tt2;
 }
 
 //std::unique_ptr<UseT2> test_use_t2() {

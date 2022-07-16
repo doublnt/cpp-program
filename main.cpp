@@ -260,16 +260,49 @@ public:
     }
 };
 
-int main() {
-    Complex com;
-    com.print_complex();
+//int main() {
+//    Complex com;
+//    com.print_complex();
+//
+//    Complex com2(1, 2);
+//    com2.print_complex();
+//
+//    Complex com3(2, 3);
+//    com3.print_complex();
+//
+////    com = com2 + com3;
+//    com = com2.operator+(com3);
+//}
 
-    Complex com2(1, 2);
-    com2.print_complex();
+class Friend {
 
-    Complex com3(2, 3);
-    com3.print_complex();
+    friend ostream &operator<<(ostream &ostream1, const Friend &aFriend);
 
-//    com = com2 + com3;
-    com = com2.operator+(com3);
+public:
+    // 友元 函数 不受 访问权限符号的 控制， 可以放在 private 或者 public 中
+    // 作用域不在该 域中
+    friend void show(const Friend &aFriend);
+
+    int get_data() const {
+        return data;
+    }
+
+private:
+    int data;
+};
+
+void show(const Friend &aFriend) {
+    cout << aFriend.data << endl;
 }
+
+ostream &operator<<(ostream &ostream1, const Friend &aFriend) {
+    ostream1 << "(" << aFriend.data << ")";
+
+    return ostream1;
+}
+
+int main() {
+    Friend fff{};
+    cout << fff << endl;
+}
+

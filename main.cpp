@@ -6,11 +6,16 @@
 
 using namespace std;
 
-std::unique_ptr<UseT2> test_use_t2();
-
-void test_ptr(const std::shared_ptr<UseT2> &ptr, int priority);
-
 /*
+//std::unique_ptr<UseT2> test_use_t2() {
+//    auto tt = std::make_unique<UseT2>();
+//
+//    return tt;
+//}
+//
+//void test_ptr(const std::shared_ptr<UseT2> &t2_ptr, int priority) {
+//
+//}
 int main() {
 //    std::string s1{"SSS11"};
 //    std::cout << (s1.find_first_not_of("S1") == std::string::npos) << std::endl;
@@ -105,6 +110,7 @@ int main() {
 }
 */
 
+
 class TempCon {
 public:
     // 构造函数 使用 explicit 是为了避免隐式转换
@@ -117,7 +123,8 @@ public:
         cout << "free object: " << this << endl;
     }
 
-    // 赋值函数
+    // 赋值函数 其实相当于 TempCon& operator=(TempCon* this, const TempCon &temp)
+    // *this 解指针就相当于  TempCon 这个对象
     TempCon &operator=(const TempCon &temp) {
         if (this != &temp) {
             data = temp.data;
@@ -153,6 +160,16 @@ TempCon tes_func(const TempCon &tt) {
 
     return TempCon(val); // 编译器 优化了， TempCon temp(val)  return temp;
 }
+
+//int main() {
+//    TempCon tt(200);
+//
+//    TempCon tt2 = tes_func(tt);
+//
+//    TempCon *tt_ptr = &tt2;
+//}
+
+
 
 class CopyTemp {
 private:
@@ -193,27 +210,49 @@ public:
     }
 };
 
+//int main() {
+//    char *dd = "Hello, world.";
+//    CopyTemp copyTemp(dd);
+//    CopyTemp copyTemp1(copyTemp);
+//
+//    CopyTemp copyTemp2("SS");
+//    copyTemp2 = copyTemp1;
+//}
+
+
+class Complex {
+private:
+    int real;
+    int vir;
+
+public:
+    Complex() : real(0), vir(0) {}
+
+    Complex(int r, int v) {
+        real = r;
+        vir = v;
+    }
+
+    void print_complex() const {
+        cout << "(" << real << "," << vir << ")" << endl;
+    }
+
+    Complex operator+(const Complex &complex) {
+
+    }
+
+    ~Complex() {}
+};
+
 int main() {
-    char *dd = "Hello, world.";
-    CopyTemp copyTemp(dd);
-    CopyTemp copyTemp1(copyTemp);
+    Complex com;
+    com.print_complex();
 
-    CopyTemp copyTemp2("SS");
-    copyTemp2 = copyTemp1;
+    Complex com2(1, 2);
+    com2.print_complex();
 
-//    TempCon tt(200);
-//
-//    TempCon tt2 = tes_func(tt);
-//
-//    TempCon *tt_ptr = &tt2;
+    Complex com3(2, 3);
+    com3.print_complex();
+
+    com = com2 + com3;
 }
-
-//std::unique_ptr<UseT2> test_use_t2() {
-//    auto tt = std::make_unique<UseT2>();
-//
-//    return tt;
-//}
-//
-//void test_ptr(const std::shared_ptr<UseT2> &t2_ptr, int priority) {
-//
-//}

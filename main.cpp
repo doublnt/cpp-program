@@ -301,8 +301,53 @@ ostream &operator<<(ostream &ostream1, const Friend &aFriend) {
     return ostream1;
 }
 
-int main() {
-    Friend fff{};
-    cout << fff << endl;
-}
+//int main() {
+//    Friend fff{};
+//    cout << fff << endl;
+//}
 
+
+class StaticTest {
+public:
+    explicit StaticTest(int d) : data(d) {
+        count = 00;
+    }
+
+    // func(StaticTest *const this)
+    void func() {
+        data = 200;
+    }
+
+    // func(const StaticTest *const this)
+    void func() const {
+//        data = 200;
+    }
+
+private:
+    int data;
+    static int count;
+};
+
+//int main() {
+//    char greet[] = "HELLO";
+//    char greet2[] = "LEEE";
+//
+//    // const 修饰的是整个 char* 所以表示这个值不能修改
+//    char const *char_const_star = greet;
+//    const char *char_const_star2 = greet;
+//
+//    char_const_star[0] = 'S';
+//    char_const_star = greet2;
+//    char_const_star2[0] = 'S';
+//    char_const_star2 = greet2;
+//
+//    // const 修饰的是 char * 指向的指针， 所以指针无法修改？？
+//    char *const const_char_star = greet;
+//    const_char_star = greet2;
+//    const_char_star[0] = 'A';
+//
+//    // 两者都无法修改，无论是指针还是值
+//    const char *const const_char_star_const = greet;
+//    const_char_star_const[0] = '1';
+//    const_char_star_const = greet2;
+//}

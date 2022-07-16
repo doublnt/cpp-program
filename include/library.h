@@ -66,7 +66,19 @@ public:
         return ss;
     }
 
+    // 使用 & 避免形参调用拷贝构造函数
+    DataTes &operator=(const DataTes &dataTes) {
+        if (this != &dataTes) {
+            data = dataTes.data;
+        }
+        return *this;
+    }
 
+    DataTes &test_temp_ref() {
+        DataTes ss;
+
+        return ss;
+    }
 };
 
 

@@ -4,10 +4,13 @@
 #include <cstring>
 #include "include/library.h"
 
+using namespace std;
+
 std::unique_ptr<UseT2> test_use_t2();
 
 void test_ptr(const std::shared_ptr<UseT2> &ptr, int priority);
 
+/*
 int main() {
 //    std::string s1{"SSS11"};
 //    std::cout << (s1.find_first_not_of("S1") == std::string::npos) << std::endl;
@@ -96,17 +99,65 @@ int main() {
     DataTes dd2;// 赋值
     dd2 = tt;
 
-    tt.func_tt(dd2);
+   // tt.func_tt(dd2);
 
     return 0;
 }
+*/
 
-std::unique_ptr<UseT2> test_use_t2() {
-    auto tt = std::make_unique<UseT2>();
+class TempCon {
+public:
+    // 构造函数 使用 explicit 是为了避免隐式转换
+    explicit TempCon(int d = 100) : data(d) {
+        cout << "Create object: " << this << endl;
+    }
 
-    return tt;
+    // 析构函数
+    ~TempCon() {
+        cout << "free object: " << this << endl;
+    }
+
+    // 赋值函数
+    TempCon &operator=(const TempCon &temp) {
+        if (this != &temp) {
+            data = temp.data;
+        }
+        cout << "assign object: " << this << "=" << &temp << endl;
+        return *this;
+    }
+
+    // 拷贝构造函数
+    TempCon(const TempCon &tt) {
+        data = tt.data;
+        cout << "copy object: " << this << "=" << &tt << endl;
+    }
+
+    int get_data() const {
+        return data;
+    }
+
+private:
+    int data;
+};
+
+TempCon tes_func(const TempCon &tt) {
+    int val = tt.get_data();
+
+    return TempCon(val); // 编译器 优化了， TempCon temp(val)  return temp;
 }
 
-void test_ptr(const std::shared_ptr<UseT2> &t2_ptr, int priority) {
+int main() {
+    TempCon tt(200);
 
+    TempCon tt2 = tes_func(tt);
 }
+
+//std::unique_ptr<UseT2> test_use_t2() {
+//    auto tt = std::make_unique<UseT2>();
+//
+//    return tt;
+//}
+//
+//void test_ptr(const std::shared_ptr<UseT2> &t2_ptr, int priority) {
+//
+//}

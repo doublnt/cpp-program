@@ -233,15 +233,31 @@ public:
         vir = v;
     }
 
+    Complex(const Complex &com) {
+        real = com.real;
+        vir = com.vir;
+    }
+
     void print_complex() const {
         cout << "(" << real << "," << vir << ")" << endl;
     }
 
-    Complex operator+(const Complex &complex) {
+    // 不能引用返回的原因是，分配在 栈上的实例， brace 结束后就 析构掉了，返回出去的其实是 野对象
+    // 可以这么说。
+    Complex operator+(const Complex &complex) const {
+        Complex temp(real + complex.real, vir + complex.vir);
+        return temp;
 
+//        return {real + complex.real, vir + complex.vir};
     }
 
-    ~Complex() {}
+//    Complex &operator=(const Complex &com) {
+//
+//    }
+
+    ~Complex() {
+        cout << "free: " << this << endl;
+    }
 };
 
 int main() {
@@ -254,5 +270,6 @@ int main() {
     Complex com3(2, 3);
     com3.print_complex();
 
-    com = com2 + com3;
+//    com = com2 + com3;
+    com = com2.operator+(com3);
 }

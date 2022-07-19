@@ -163,13 +163,8 @@ TempCon tes_func(const TempCon &tt) {
 
 //int main() {
 //    TempCon tt(200);
-//
 //    TempCon tt2 = tes_func(tt);
-//
-//    TempCon *tt_ptr = &tt2;
 //}
-
-
 
 class CopyTemp {
 private:
@@ -350,4 +345,33 @@ private:
 //    const char *const const_char_star_const = greet;
 //    const_char_star_const[0] = '1';
 //    const_char_star_const = greet2;
+//}
+
+class test_const {
+private:
+    int data;
+public:
+    std::vector<int> get_vec() const {
+        return std::vector<int>{1, 2, 3};
+    }
+
+    int get_int() const {
+        return data;
+    }
+
+public:
+    explicit test_const(int d) : data(d) {
+
+    }
+};
+
+//int main() {
+//    test_const tt(200);
+//
+//    auto temp = tt.get_vec();
+//    temp.emplace_back(1);
+//
+//    auto aa = tt.get_int();
+//    aa = 200;
+//
 //}

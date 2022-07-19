@@ -402,8 +402,102 @@ public:
         return true;
     }
 };
+//
+//int main() {
+//    tt t1, t2;
+//    max(t1, t2);
+//}
+
+template<typename Type>
+class List;
+
+template<typename Type>
+class ListNode {
+    friend class List<Type>;
+
+public:
+    ListNode() : data(Type()), next(nullptr) {}
+
+    ListNode(Type d, ListNode<Type> *n = nullptr) : data(d), next(n) {
+
+    }
+
+    ~ListNode() {
+
+    }
+
+private:
+    Type data;
+    ListNode<Type> *next;
+};
+
+template<typename Type>
+class List {
+private:
+    ListNode<Type> *first;
+    ListNode<Type> *last;
+
+    size_t size;
+
+public:
+    List();
+
+    bool push_back(Type val);
+
+    void print();
+
+    ~List();
+};
+
+template<typename Type>
+List<Type>::List() {
+    first = last = (ListNode<Type> *) malloc(sizeof(ListNode<Type>));
+    last->next = nullptr;
+    size = 0;
+}
+
+template<typename Type>
+bool List<Type>::push_back(Type val) {
+    ListNode<Type> *node1 = (ListNode<Type> *) malloc(sizeof(ListNode<Type>));
+
+    if (node1 == nullptr) {
+        return false;
+    }
+
+    node1->next = nullptr;
+    node1->data = val;
+
+    last->next = node1;
+    last = node1;
+    size++;
+    return true;
+}
+
+template<typename Type>
+void List<Type>::print() {
+    ListNode<Type> *temp = first->next;
+
+    while (temp != nullptr) {
+        cout << temp->data << "->";
+
+        temp = temp->next;
+    }
+
+    cout << "NULL" << endl;
+}
+
+template<typename Type>
+List<Type>::~List<Type>() {
+
+}
 
 int main() {
-    tt t1, t2;
-    max(t1, t2);
+    List<char> mylist;
+
+    for (int i = 20; i < 80; ++i) {
+        mylist.push_back(i);
+    }
+    mylist.print();
+
+    return 0;
 }

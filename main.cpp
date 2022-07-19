@@ -360,8 +360,16 @@ public:
     }
 
 public:
-    explicit test_const(int d) : data(d) {
+    test_const(int d) : data(d) {
 
+    }
+
+    bool operator>(const test_const &a) {
+        return true;
+    }
+
+    bool operator<(const test_const &a) {
+        return true;
     }
 };
 
@@ -375,3 +383,27 @@ public:
 //    aa = 200;
 //
 //}
+
+// 函数模板 -> 生成 模板函数
+template<typename Type>
+Type Max(Type a, Type b) {
+    // 实参的推演
+    return a > b ? a : b;
+}
+
+template<typename type1, typename type2>
+type1 max(type1 a, type2 b) {
+    return a > b ? a : b;
+}
+
+class tt {
+public:
+    bool operator>(const tt &t) {
+        return true;
+    }
+};
+
+int main() {
+    tt t1, t2;
+    max(t1, t2);
+}

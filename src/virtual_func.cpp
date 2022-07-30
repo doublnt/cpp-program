@@ -6,25 +6,17 @@
 using namespace std;
 
 class A {
-private:
-    int data;
+    // 相当于 抽象类了，不能具体实例化。
+    virtual void eat() = 0;
+};
 
-public:
-    virtual void show() {
-        cout << "A show" << endl;
-    }
-
-    A() {
-
-    }
-
-    ~A() {
-
+class A_Inherit : A {
+    void eat() override {
+        cout << "A_inherit eat" << endl;
     }
 };
 
 int main() {
-    cout << sizeof(A) << endl;
-    A a{};
+    A_Inherit a;
 }
 

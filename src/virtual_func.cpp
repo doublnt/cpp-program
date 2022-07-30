@@ -2,6 +2,7 @@
 // Created by yinxi on 2022/7/30.
 //
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -17,6 +18,17 @@ class A_Inherit : A {
 };
 
 int main() {
-    A_Inherit a;
+    int ar[] = {10, 20, 30, 40, 50, 60};
+
+    ifstream file;
+    file.open("ttt.txt", ios::in | ios::binary);
+    if (!file) {
+        cerr << "Error open file";
+        exit(1);
+    }
+
+    for (size_t i = 0; i < sizeof(ar) / sizeof(int); ++i) {
+        file >> ar[0];
+    }
 }
 

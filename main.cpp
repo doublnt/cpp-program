@@ -491,13 +491,55 @@ List<Type>::~List<Type>() {
 
 }
 
-int main() {
-    List<char> mylist;
+//int main() {
+//    List<char> mylist;
+//
+//    for (int i = 20; i < 80; ++i) {
+//        mylist.push_back(i);
+//    }
+//    mylist.print();
+//
+//    return 0;
+//}
 
-    for (int i = 20; i < 80; ++i) {
-        mylist.push_back(i);
+//int main() {
+//    int *ptr = new int[10];
+//
+//    delete[] ptr;
+//    ptr = nullptr;
+//
+//    return 0;
+//}
+
+class smart_ptr {
+public:
+    smart_ptr() {
+        cout << "Creat" << endl;
     }
-    mylist.print();
 
-    return 0;
-}
+    ~smart_ptr() {
+        cout << "delete" << endl;
+    }
+
+    smart_ptr(const smart_ptr &ptr) {
+        data = ptr.data;
+
+        cout << "copy" << endl;
+    }
+
+    smart_ptr &operator=(const smart_ptr &ptr) {
+        if (this != &ptr) {
+            data = ptr.data;
+        }
+        cout << "assign" << endl;
+        return *this;
+    }
+
+public:
+    void test(std::shared_ptr<smart_ptr> tt) {
+        tt->data = 200;
+    }
+
+private:
+    int data;
+};

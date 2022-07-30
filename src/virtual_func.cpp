@@ -17,18 +17,16 @@ class A_Inherit : A {
     }
 };
 
-int main() {
-    int ar[] = {10, 20, 30, 40, 50, 60};
-
-    ifstream file;
-    file.open("ttt.txt", ios::in | ios::binary);
-    if (!file) {
-        cerr << "Error open file";
-        exit(1);
-    }
-
-    for (size_t i = 0; i < sizeof(ar) / sizeof(int); ++i) {
-        file >> ar[0];
-    }
+void print() {
+    cout << "err" << endl;
 }
 
+int main() {
+    // malloc and new operator
+    //set_new_handler(print);
+    try {
+        int *p = new int[400000000000000000];
+    } catch (std::exception &e) {
+        cout << e.what() << endl;
+    }
+}
